@@ -1,10 +1,11 @@
-const express = require('express');
-const mongoose = require('mongoose');
-const morgan = require('morgan');
+const express = require('express')
+const mongoose = require('mongoose')
+const morgan = require('morgan')
 
-const app = express();
+const app = express()
 
-const userRoutes = require('./routes/user');
+const userRoutes = require('./routes/user')
+const productRoutes = require('./routes/product')
 
 mongoose.connect('mongodb+srv://Denis:' 
   + process.env.MONGO_ATLAS_PW 
@@ -12,11 +13,13 @@ mongoose.connect('mongodb+srv://Denis:'
   {
     useNewUrlParser: true
   }
-);
+)
 
 app.use(morgan('dev'))
+app.use('/uploads', express.static('uploads'))
 app.use(express.json())
-app.use(userRoutes);
+app.use(userRoutes)
+app.use(productRoutes)
 
 
 

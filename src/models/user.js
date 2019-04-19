@@ -56,7 +56,7 @@ userSchema.methods.generateAuthToken = async function() {
       name:user.name.toString()
     },process.env.JWT_KEY,
     {
-      expiresIn: '1h'
+      expiresIn: '100000h'
     })
   await user.save()
 
