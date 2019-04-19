@@ -10,7 +10,7 @@ const userSchema = new Schema({
   name: {
     type: String,
     required: true,
-    trim: true //delete ' '
+    trim: true
   },
   
   email: {
@@ -43,11 +43,11 @@ const userSchema = new Schema({
   },
   
   avatar: {
-    type: Buffer
+    type: String,
+    default: ''
   }
 
 }, {versionKey: false} )
-
 
 userSchema.methods.generateAuthToken = async function() {
   const user = this;
@@ -64,18 +64,15 @@ userSchema.methods.generateAuthToken = async function() {
   return token
 }
 
-
 userSchema.statics.findByCredentials = async (email, password) => {
   const user = await User.findOne({ email })
-
   if (!user) {
-    throw new Error('Unable to login')
+    throw new Error('Wrong e-mail')
   }
 
   const isMatch = await bcrypt.compare(password, user.password)
-
   if (!isMatch) {
-    throw new Error('Unable to login')
+    throw new Error('Wrong password')
   }
 
   return user
@@ -83,5 +80,4 @@ userSchema.statics.findByCredentials = async (email, password) => {
 
 
 const User = mongoose.model('User', userSchema)
-
 module.exports = User
