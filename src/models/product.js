@@ -21,8 +21,8 @@ const productSchema = new Schema({
   },
 
   category: { 
-    type: Array,
-    required: true
+    type: Schema.Types.ObjectId, 
+    ref: 'Category'
   },
 
   price: { 

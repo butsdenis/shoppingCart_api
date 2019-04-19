@@ -6,6 +6,8 @@ const app = express()
 
 const userRoutes = require('./routes/user')
 const productRoutes = require('./routes/product')
+const reviewRoutes = require('./routes/review')
+const categoryRoutes = require('./routes/category')
 
 mongoose.connect('mongodb+srv://Denis:' 
   + process.env.MONGO_ATLAS_PW 
@@ -20,7 +22,7 @@ app.use('/uploads', express.static('uploads'))
 app.use(express.json())
 app.use(userRoutes)
 app.use(productRoutes)
-
-
+app.use(reviewRoutes)
+app.use(categoryRoutes)
 
 module.exports = app;
