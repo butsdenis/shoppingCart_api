@@ -1,5 +1,6 @@
 const express = require('express');
 const mongoose = require('mongoose');
+const morgan = require('morgan');
 
 const app = express();
 
@@ -13,7 +14,7 @@ mongoose.connect('mongodb+srv://Denis:'
   }
 );
 
-
+app.use(morgan('dev'))
 app.use(express.json())
 app.use(userRoutes);
 
