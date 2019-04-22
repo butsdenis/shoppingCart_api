@@ -22,8 +22,8 @@ const upload = multer({
 router.get('/products', ProductControllers.getProducts)
 router.get('/products/:id', ProductControllers.getProductById) 
 router.get('/products/category/:category', ProductControllers.getProductsByCategory) 
-router.post('/products', upload.single('image'), [authSuper || authAdmin], ProductControllers.createProduct)
-router.patch('/products/:id', upload.single('image'), [authSuper || authAdmin], ProductControllers.editProduct)
-router.delete('/products/:id', [authSuper || authAdmin], ProductControllers.deleteProduct)
+router.post('/products', upload.single('image'), authAdmin, ProductControllers.createProduct)
+router.patch('/products/:id', upload.single('image'), authAdmin, ProductControllers.editProduct)
+router.delete('/products/:id', authAdmin, ProductControllers.deleteProduct)
 
 module.exports = router

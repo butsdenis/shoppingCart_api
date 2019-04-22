@@ -20,7 +20,7 @@ const upload = multer({
   }
 })
 
-router.get('/users', [authSuper || authAdmin], UserControllers.getAllUsers)
+router.get('/users', authSuper, UserControllers.getAllUsers)
 router.get('/users/me', auth, async (req, res) => {
 	res.send(req.user)
 })
