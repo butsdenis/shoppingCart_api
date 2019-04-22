@@ -1,12 +1,27 @@
 const Product = require('../models/product')
+var mongoose = require('mongoose')
 
-exports.getProducts = async (req, res) => {
-  try {
-    const products = await Product.find()
-    res.send(products)
-  } catch (e) {
-    return res.status(500).send({ error: e.message })
-  }
+// exports.getProducts = async (req, res) => {
+//   try {
+//     const products = await Product.find()
+//     res.send(products)
+//   } catch (e) {
+//     return res.status(500).send({ error: e.message })
+//   }
+// }
+
+exports.getProducts = (req, res, next) => {
+  Product.find()
+    .populate({path: 'category', select: 'name'})
+    .exec()
+    .then(docs => {
+      res.status(200).send(docs);
+    })
+    .catch(err => {
+      res.status(500).send({
+        error: err
+      })
+    })
 }
 
 exports.getProduct = async (req, res) => {
@@ -24,6 +39,7 @@ exports.getProduct = async (req, res) => {
 }
 
 exports.createProduct = async (req, res) => {
+  console.log(mongoose.Types.ObjectId.isValid(req.body.category[1]))
   const product = new Product({
     image: req.file.path,
     ...req.body
