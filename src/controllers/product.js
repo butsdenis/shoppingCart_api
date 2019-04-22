@@ -24,6 +24,23 @@ exports.getProducts = (req, res, next) => {
     })
 }
 
+
+exports.getProductsByCategory = async (req, res) => {
+  try {
+    const product = await Product.find({ category: { $all : [req.params.category]} })
+
+    if (!product) {
+      return res.status(404).send()
+    }
+
+    res.send(product)
+  } catch (e) {
+    return res.status(500).send({ error: e.message })
+  }
+}
+
+
+
 exports.getProduct = async (req, res) => {
   try {
     const product = await Product.findOne({ _id: req.params.id })

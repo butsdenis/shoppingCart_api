@@ -19,6 +19,7 @@ const upload = multer({
 })
 
 router.get('/products', auth, ProductControllers.getProducts)
+router.get('/products/:category', auth, ProductControllers.getProductsByCategory) 
 router.get('/products/:id', auth, ProductControllers.getProduct) 
 router.post('/products', upload.single('image'), auth, ProductControllers.createProduct)
 router.patch('/products/:id', upload.single('image'), auth, ProductControllers.editProduct)
