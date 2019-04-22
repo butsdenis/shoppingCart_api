@@ -3,6 +3,7 @@ const Schema = mongoose.Schema;
 const validator = require('validator');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
+require('dotenv').config();
 mongoose.set('useCreateIndex', true);
 
 const userSchema = new Schema({
@@ -43,7 +44,8 @@ const userSchema = new Schema({
   },
   
   avatar: { 
-    type: String 
+    type: String,
+    default: 'uploads/2b3b787fdeb42b4364dffa3920f89d4e' 
   }
 
 }, {versionKey: false} )
@@ -51,32 +53,43 @@ const userSchema = new Schema({
 userSchema.methods.generateAuthToken = async function() {
   const user = this;
   let token;
+
   if (user.role == 'super') {
-    console.log(process.env)
     this.token = jwt.sign(
       {
         _id:user._id.toString(),
         name:user.name.toString()
-      },process.env.SUPER,
+      },process.env.JWT_KEY_SUPER,
       {
         expiresIn: '1h'
       })
-    console.log(this.token)
     await user.save()
     return this.token
   }
 
-  this.token = jwt.sign(
-    {
-      _id:user._id.toString(),
-      name:user.name.toString()
-    },process.env.JWT_KEY,
-    {
-      expiresIn: '100000h'
-    })
-  await user.save()
-   
-  return token
+  if (user.role == 'admin') {
+    this.token = jwt.sign(
+      {
+        _id:user._id.toString(),
+        name:user.name.toString()
+      },process.env.JWT_KEY_ADMIN,
+      {
+        expiresIn: '1h'
+      })
+    await user.save()
+    return this.token
+  } else {
+    this.token = jwt.sign(
+      {
+        _id:user._id.toString(),
+        name:user.name.toString()
+      },process.env.JWT_KEY,
+      {
+        expiresIn: '100000h'
+      })
+    await user.save() 
+    return this.token
+  }
 }
 
 userSchema.statics.findByCredentials = async (email, password) => {

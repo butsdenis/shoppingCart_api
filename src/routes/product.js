@@ -1,6 +1,7 @@
 const express = require('express')
 const multer = require('multer')
-const auth = require('../middleware/auth')
+const authSuper = require('../middleware/authSuper')
+const authAdmin = require('../middleware/authAdmin')
 const ProductControllers = require('../controllers/product')
 const router = new express.Router()
 
@@ -18,11 +19,11 @@ const upload = multer({
   }
 })
 
-router.get('/products', auth, ProductControllers.getProducts)
-router.get('/products/:id', auth, ProductControllers.getProductById) 
-router.get('/products/category/:category', auth, ProductControllers.getProductsByCategory) 
-router.post('/products', upload.single('image'), auth, ProductControllers.createProduct)
-router.patch('/products/:id', upload.single('image'), auth, ProductControllers.editProduct)
-router.delete('/products/:id', auth, ProductControllers.deleteProduct)
+router.get('/products', ProductControllers.getProducts)
+router.get('/products/:id', ProductControllers.getProductById) 
+router.get('/products/category/:category', ProductControllers.getProductsByCategory) 
+router.post('/products', upload.single('image'), [authSuper || authAdmin], ProductControllers.createProduct)
+router.patch('/products/:id', upload.single('image'), [authSuper || authAdmin], ProductControllers.editProduct)
+router.delete('/products/:id', [authSuper || authAdmin], ProductControllers.deleteProduct)
 
 module.exports = router
