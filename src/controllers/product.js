@@ -41,7 +41,7 @@ exports.getProductsByCategory = async (req, res) => {
 
 
 
-exports.getProduct = async (req, res) => {
+exports.getProductById = async (req, res) => {
   try {
     const product = await Product.findOne({ _id: req.params.id })
 

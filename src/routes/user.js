@@ -1,6 +1,7 @@
 const express = require('express')
 const multer = require('multer')
 const auth = require('../middleware/auth')
+const authSuper = require('../middleware/authSuper')
 const UserControllers = require('../controllers/user')
 const router = new express.Router()
 
@@ -18,7 +19,7 @@ const upload = multer({
   }
 })
 
-router.get('/users', auth, UserControllers.getAllUsers)
+router.get('/users', authSuper, UserControllers.getAllUsers)
 router.get('/users/me', auth, async (req, res) => {
 	res.send(req.user)
 })

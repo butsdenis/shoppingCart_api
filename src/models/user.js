@@ -50,7 +50,23 @@ const userSchema = new Schema({
 
 userSchema.methods.generateAuthToken = async function() {
   const user = this;
-  const token = jwt.sign(
+  let token;
+  if (user.role == 'super') {
+    console.log(process.env)
+    this.token = jwt.sign(
+      {
+        _id:user._id.toString(),
+        name:user.name.toString()
+      },process.env.SUPER,
+      {
+        expiresIn: '1h'
+      })
+    console.log(this.token)
+    await user.save()
+    return this.token
+  }
+
+  this.token = jwt.sign(
     {
       _id:user._id.toString(),
       name:user.name.toString()
@@ -59,7 +75,7 @@ userSchema.methods.generateAuthToken = async function() {
       expiresIn: '100000h'
     })
   await user.save()
-
+   
   return token
 }
 
