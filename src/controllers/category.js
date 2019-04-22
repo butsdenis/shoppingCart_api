@@ -28,6 +28,22 @@ exports.getCategories = async (req, res) => {
   }
 }
 
+exports.editCategory = async (req, res) => {
+  
+  try {
+    const category = await Category.findOneAndUpdate({ _id: req.params.id }, req.body, {new: true})
+
+    if (!category) {
+      return res.status(404).send()
+    }
+  
+    await category.save()
+    res.send(category)
+  } catch (e) {
+    res.status(400).send({ error: e.message })
+  }
+}
+
 exports.deleteCategories = async (req, res) => {
   try {
     const category = await Category.findOneAndDelete({ _id: req.params.id })
