@@ -58,7 +58,8 @@ userSchema.methods.generateAuthToken = async function() {
     this.token = jwt.sign(
       {
         _id:user._id.toString(),
-        name:user.name.toString()
+        name:user.name.toString(),
+        role:user.role.toString()
       },process.env.JWT_KEY_SUPER,
       {
         expiresIn: '1h'
@@ -71,7 +72,8 @@ userSchema.methods.generateAuthToken = async function() {
     this.token = jwt.sign(
       {
         _id:user._id.toString(),
-        name:user.name.toString()
+        name:user.name.toString(),
+        role:user.role.toString()
       },process.env.JWT_KEY_ADMIN,
       {
         expiresIn: '1h'
@@ -82,7 +84,8 @@ userSchema.methods.generateAuthToken = async function() {
     this.token = jwt.sign(
       {
         _id:user._id.toString(),
-        name:user.name.toString()
+        name:user.name.toString(),
+        role:user.role.toString()
       },process.env.JWT_KEY,
       {
         expiresIn: '100000h'
