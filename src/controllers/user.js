@@ -62,6 +62,38 @@ exports.editUser = async (req, res) => {
   }
 }
 
+exports.editUserRole = async (req, res) => {
+  console.log(req.body.role)
+  const updates = Object.keys(req.body)
+  const allowedUpdates = ['role']
+  const isValid = updates.every((update) => allowedUpdates.includes(update))
+
+  if (req.body.role == 'admin' || 
+      req.body.role == 'super' || 
+      req.body.role == 'editor') {
+
+        if (!isValid) {
+          return res.status(400).send({ error: 'Invalid updates!' })
+        }
+
+        try {
+          const user = await User.findOne({ _id: req.params.id })
+      
+          if (!user) {
+            return res.status(404).send()
+          }
+          updates.forEach((update) => {
+            user[update] = req.body[update]
+          })
+          await user.save()
+          res.send(user)
+        } catch (e) {
+          res.status(400).send({ error: e.message })
+        }
+  }
+  return res.status(400).send({ error: 'Wrong role' }) 
+}
+
 exports.deleteUser = async (req, res) => {
   try {
     const user = await User.findOneAndDelete({ _id: req.params.id })

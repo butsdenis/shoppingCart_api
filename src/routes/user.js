@@ -27,6 +27,7 @@ router.get('/users/me', auth, async (req, res) => {
 router.post('/users', upload.single('avatar'), UserControllers.createUser)
 router.post('/users/login', UserControllers.loginUser)
 router.patch('/users/:id', upload.single('avatar'), auth, UserControllers.editUser)
+router.patch('/users/role/:id', authSuper, UserControllers.editUserRole)
 router.delete('/users/:id', authSuper, UserControllers.deleteUser)
 
 

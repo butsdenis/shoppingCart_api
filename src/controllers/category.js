@@ -28,6 +28,15 @@ exports.getCategories = async (req, res) => {
   }
 }
 
+exports.getCategoryById = async (req, res) => {
+  try {
+    const product = await Category.findOne({ _id: req.params.id })
+    res.send(product)
+  } catch (e) {
+    return res.status(500).send({error: e.message})
+  }
+}
+
 exports.editCategory = async (req, res) => {
   
   try {

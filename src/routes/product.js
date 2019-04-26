@@ -19,6 +19,7 @@ const upload = multer({
   }
 })
 
+
 router.get('/products', ProductControllers.getProducts)
 router.get('/products/:id', ProductControllers.getProductById) 
 router.get('/products/category/:category', ProductControllers.getProductsByCategory) 

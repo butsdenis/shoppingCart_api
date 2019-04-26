@@ -24,6 +24,19 @@ exports.getProducts = (req, res, next) => {
     })
 }
 
+exports.getProductById = (req, res, next) => {
+  Product.findOne({ _id: req.params.id })
+    .populate({path: 'category', select: 'name'})
+    .exec()
+    .then(docs => {
+      res.status(200).send(docs);
+    })
+    .catch(err => {
+      res.status(500).send({
+        error: err
+      })
+    })
+}
 
 exports.getProductsByCategory = async (req, res) => {
   try {
@@ -39,24 +52,8 @@ exports.getProductsByCategory = async (req, res) => {
   }
 }
 
-
-
-exports.getProductById = async (req, res) => {
-  try {
-    const product = await Product.findOne({ _id: req.params.id })
-
-    if (!product) {
-      return res.status(404).send()
-    }
-
-    res.send(product)
-  } catch (e) {
-    return res.status(500).send({ error: e.message })
-  }
-}
-
 exports.createProduct = async (req, res) => {
-  console.log(mongoose.Types.ObjectId.isValid(req.body.category[1]))
+  console.log(req)
   const product = new Product({
     image: req.file.path,
     ...req.body
