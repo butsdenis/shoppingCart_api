@@ -56,7 +56,10 @@ exports.createProduct = async (req, res) => {
   console.log(req)
   const product = new Product({
     image: req.file.path,
-    ...req.body
+    category: JSON.parse(req.body.category),
+    title: req.body.title,
+    price: req.body.price,
+    text: req.body.text
   })
 
   try {
