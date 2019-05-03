@@ -89,7 +89,9 @@ exports.editProduct = async (req, res) => {
       product.image = req.file.path
     }
     updates.forEach((update) => {
-      product[update] = req.body[update]
+      if(update == 'category') {
+        product[update] =JSON.parse(req.body[update]) 
+      } else product[update] = req.body[update]
     })
     await product.save()
     res.send(product)
