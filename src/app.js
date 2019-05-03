@@ -8,6 +8,7 @@ const userRoutes = require('./routes/user')
 const productRoutes = require('./routes/product')
 const reviewRoutes = require('./routes/review')
 const categoryRoutes = require('./routes/category')
+const orderRoutes = require('./routes/order')
 
 mongoose.connect('mongodb+srv://Denis:' 
   + process.env.MONGO_ATLAS_PW 
@@ -44,6 +45,7 @@ app.use(userRoutes)
 app.use(productRoutes)
 app.use(reviewRoutes)
 app.use(categoryRoutes)
+app.use(orderRoutes)
 
 
 
