@@ -22,11 +22,9 @@ const orderSchema = new Schema({
     lowercase: true
     },
   order: [{
-    price: {
-      type: Number,
-      required: true,
-      trim: true,
-      lowercase: true
+    product_id: { 
+      type: Schema.Types.ObjectId, 
+      ref: 'Product'
     },
     quantity: {
       type: Number,

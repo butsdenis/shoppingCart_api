@@ -2,7 +2,6 @@ const Review = require('../models/review')
 require('dotenv').config();
 
 exports.getReviews = async (req, res) => {
-  console.log(process.env.SECRET_KEY)
   try {
     const reviews = await Review.find()
     res.send(reviews)
