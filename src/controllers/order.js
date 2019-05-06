@@ -68,5 +68,4 @@ exports.changeStatus = async (req, res) => {
           res.status(400).send({ error: e.message })
         }
   }
-  return res.status(400).send({ error: 'Wrong status' }) 
 }
