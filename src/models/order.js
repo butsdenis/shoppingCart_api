@@ -21,6 +21,12 @@ const orderSchema = new Schema({
     trim: true,
     lowercase: true
     },
+  status: {
+    type: String, 
+    required: true,
+    trim: true,
+    lowercase: true
+    },
   order: [{
     product_id: { 
       type: Schema.Types.ObjectId, 

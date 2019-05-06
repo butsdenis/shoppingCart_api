@@ -5,6 +5,7 @@ const authAdmin = require('../middleware/authAdmin')
 
 router.get('/order', authAdmin, OrderControllers.getOrders)
 router.post('/order', OrderControllers.createOrder)
+router.patch('/order/:id', OrderControllers.changeStatus)
 
 module.exports = router;
 

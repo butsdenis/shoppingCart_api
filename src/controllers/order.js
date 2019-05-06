@@ -28,6 +28,7 @@ exports.createOrder = async (req, res) => {
     name: req.body.buyingForm.name,
     email: req.body.buyingForm.email,
     phone: req.body.buyingForm.phone,
+    status: req.body.buyingForm.status,
     ...req.body
   })
 
@@ -37,4 +38,35 @@ exports.createOrder = async (req, res) => {
   } catch (e) {
     res.status(400).send({ error: e.message })
   }
+}
+
+exports.changeStatus = async (req, res) => {
+  const updates = Object.keys(req.body)
+  const allowedUpdates = ['status']
+  const isValid = updates.every((update) => allowedUpdates.includes(update))
+
+  if (req.body.status == 'expect' || 
+      req.body.status == 'complited' || 
+      req.body.status == 'canceled') {
+
+        if (!isValid) {
+          return res.status(400).send({ error: 'Invalid updates!' })
+        }
+
+        try {
+          const order = await Order.findOne({ _id: req.params.id })
+      
+          if (!order) {
+            return res.status(404).send()
+          }
+          updates.forEach((update) => {
+            order[update] = req.body[update]
+          })
+          await order.save()
+          res.send(order)
+        } catch (e) {
+          res.status(400).send({ error: e.message })
+        }
+  }
+  return res.status(400).send({ error: 'Wrong status' }) 
 }
