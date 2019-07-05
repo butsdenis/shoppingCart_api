@@ -1,5 +1,4 @@
 # shoppingCart_api
-Run `npm run dev` for a dev server.
 This project was built with node.js + express.
 
 # Getting started
