@@ -111,3 +111,19 @@ Returns a users
         "email": "admin@g.com"
     } ...
 ```
+
+### Delete user:
+
+`DELETE /users/:id`
+
+Returns a deleted user 
+```JSON
+{
+    "role": "editor",
+    "avatar": "uploads/2b3b787fdeb42b4364dffa3920f89d4e",
+    "_id": "5ccc3ae737b0322e4498eeaf",
+    "name": "Test",
+    "password": "$2b$08$CUmXNmAJY5Fg67JjjIebLOZ.8jMgR1fV01iauBZZ/K6owxHxvzJIW",
+    "email": "test@g.com"
+}
+```
