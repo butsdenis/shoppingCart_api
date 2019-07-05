@@ -11,6 +11,7 @@ This project was built with node.js + express.
 ###Registration:
 
 `POST /users`
+
 Example request body:
 ```JSON
 {
