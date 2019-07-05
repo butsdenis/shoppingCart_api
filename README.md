@@ -8,7 +8,7 @@ This project was built with node.js + express.
 
 # Endpoints
 
-###Registration:
+### Registration:
 
 `POST /users`
 
